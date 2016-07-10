@@ -1,12 +1,12 @@
 # 3. Node Specific Config
 #!/bin/bash
 ## Variables
-NODEVARS=(`echo $1 | cut $1 -d';' -f1`)
-PIPVARS=(`echo $1 | cut $1 -d';' -f2`)
+NODEVARS=(`echo $1 | cut -d';' -f1`)
+PIPVARS=(`echo $1 | cut -d';' -f2`)
 IDVAR=$2
 
-NODENAME=${NODEVARS[$IDVAR]}
-PRVIP=${PIPVARS[$IDVAR]}
+NODENAME=(${NODEVARS[$IDVAR]})
+PRVIP=(${PIPVARS[$IDVAR]})
 
 ## edit /etc/hosts
 sed -i.bak /$NODENAME/d /etc/hosts
