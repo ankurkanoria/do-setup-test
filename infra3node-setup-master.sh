@@ -1,12 +1,11 @@
-# 3. Node Specific Config
 #!/bin/bash
 ## Variables
 NODEVARS=(`echo $1 | cut -d';' -f1`)
 PIPVARS=(`echo $1 | cut -d';' -f2`)
 IDVAR=$2
 
-NODENAME=(${NODEVARS[$IDVAR]})
-PRVIP=(${PIPVARS[$IDVAR]})
+NODENAME=${NODEVARS[$(($IDVAR-1))]}
+PRVIP=${PIPVARS[$(($IDVAR-1))]}
 
 ## edit /etc/hosts
 sed -i.bak /$NODENAME/d /etc/hosts
@@ -20,7 +19,7 @@ EOL
 
 ## Zookeeper Conf
 echo $IDVAR | tee -a /var/lib/zookeeper/myid
-echo clientPortAddress=${NODENAME} | tee -a /etc/zookeeper/conf/zoo.cfg
+echo clientPortAddress=$NODENAME | tee -a /etc/zookeeper/conf/zoo.cfg
 tee -a /etc/zookeeper/conf/zoo.cfg > /dev/null << EOL
 #Zookeeper Server Ensemble
 server.1=${NODEVARS[0]}:2888:3888
